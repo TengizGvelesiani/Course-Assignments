@@ -1,9 +1,8 @@
 public class InsertionSort {
 
-    int curr, prev, i;
-
     public void sort(int[] array) {
-        for (i = 1; i < array.length; i++) {
+        int curr, prev;
+        for (int i = 1; i < array.length; i++) {
             curr = array[i];
             prev = i - 1;
 
