@@ -1,4 +1,4 @@
-package assignment_02.interactions;
+package learning_platform.interactions;
 
 public class Certificate {
 

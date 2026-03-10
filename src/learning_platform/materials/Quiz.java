@@ -1,4 +1,4 @@
-package assignment_02.materials;
+package learning_platform.materials;
 
 public class Quiz {
 

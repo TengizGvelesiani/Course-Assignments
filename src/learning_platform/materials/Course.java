@@ -1,6 +1,6 @@
-package assignment_02.materials;
+package learning_platform.materials;
 
-import assignment_02.users.Instructor;
+import learning_platform.users.Instructor;
 
 public class Course {
 

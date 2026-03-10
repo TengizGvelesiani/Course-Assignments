@@ -1,10 +1,10 @@
-package assignment_02;
+package learning_platform;
 
-import assignment_02.interactions.Payment;
-import assignment_02.materials.Course;
-import assignment_02.service.PurchaseService;
-import assignment_02.users.Instructor;
-import assignment_02.users.Student;
+import learning_platform.interactions.Payment;
+import learning_platform.materials.Course;
+import learning_platform.service.PurchaseService;
+import learning_platform.users.Instructor;
+import learning_platform.users.Student;
 
 public class Assignment02Main {
 

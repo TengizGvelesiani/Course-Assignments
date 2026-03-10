@@ -1,4 +1,4 @@
-package assignment_02;
+package learning_platform;
 
 public class PlatformRegistry {
     private static String platformName;

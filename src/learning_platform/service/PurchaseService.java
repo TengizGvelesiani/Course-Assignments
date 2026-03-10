@@ -1,9 +1,9 @@
-package assignment_02.service;
+package learning_platform.service;
 
-import assignment_02.PlatformRegistry;
-import assignment_02.interactions.Payment;
-import assignment_02.materials.Course;
-import assignment_02.users.Student;
+import learning_platform.PlatformRegistry;
+import learning_platform.interactions.Payment;
+import learning_platform.materials.Course;
+import learning_platform.users.Student;
 
 public class PurchaseService {
 

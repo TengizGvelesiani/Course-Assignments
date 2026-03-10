@@ -1,4 +1,4 @@
-package assignment_02.users;
+package learning_platform.users;
 
 public class Student extends User {
 
