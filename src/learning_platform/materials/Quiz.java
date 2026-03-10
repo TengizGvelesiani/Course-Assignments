@@ -3,16 +3,20 @@ package learning_platform.materials;
 public class Quiz {
 
     private int timeLimitMinutes;
-    private int numberOfQuestions;
+    private Question[] questions;
 
-    public Quiz(int limit, int numberOfQuestions) {
+    public Quiz(int limit, Question[] questions) {
         this.timeLimitMinutes = limit;
-        this.numberOfQuestions = numberOfQuestions;
+        this.questions = questions;
     }
 
     public int getTimeLimit() { return timeLimitMinutes; }
     public void setTimeLimit(int limit) { this.timeLimitMinutes = limit; }
 
-    public int getNumberOfQuestions() { return numberOfQuestions; }
-    public void setNumberOfQuestions(int numberOfQuestions) { this.numberOfQuestions = numberOfQuestions; }
+    public Question[] getQuestions() { return questions; }
+    public void setQuestions(Question[] questions) { this.questions = questions; }
+
+    public int getNumberOfQuestions() {
+        return questions == null ? 0 : questions.length;
+    }
 }

@@ -1,18 +1,28 @@
 package learning_platform.interactions;
 
+import java.time.LocalDate;
+
+import learning_platform.materials.Course;
+import learning_platform.users.Student;
+
 public class Certificate {
 
-    private String issueDate;
-    private String certificateOwner;
+    private LocalDate issueDate;
+    private Student student;
+    private Course course;
 
-    public Certificate(String date, String certificateOwner) {
-        this.issueDate = date;
-        this.certificateOwner = certificateOwner;
+    public Certificate(LocalDate issueDate, Student student, Course course) {
+        this.issueDate = issueDate;
+        this.student = student;
+        this.course = course;
     }
 
-    public String getIssueDate() { return issueDate; }
-    public void setIssueDate(String date) { this.issueDate = date; }
+    public LocalDate getIssueDate() { return issueDate; }
+    public void setIssueDate(LocalDate issueDate) { this.issueDate = issueDate; }
 
-    public String getCertificateOwner() { return certificateOwner; }
-    public void setCertificateOwner(String certificateOwner) { this.certificateOwner = certificateOwner; }
+    public Student getStudent() { return student; }
+    public void setStudent(Student student) { this.student = student; }
+
+    public Course getCourse() { return course; }
+    public void setCourse(Course course) { this.course = course; }
 }

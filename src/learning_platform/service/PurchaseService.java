@@ -1,27 +1,50 @@
 package learning_platform.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import learning_platform.PlatformRegistry;
+import learning_platform.interactions.Certificate;
+import learning_platform.interactions.Enrollment;
 import learning_platform.interactions.Payment;
 import learning_platform.materials.Course;
 import learning_platform.users.Student;
 
 public class PurchaseService {
 
-    public void buyCourse(Student student, Course course, Payment payment) {
+    public Enrollment buyCourse(Student student, Course course, Payment payment) {
         System.out.println("\n--- Starting Transaction ---");
-        if(course.getLimit() > course.getEnrolledStudentsCount()){
-            if (payment.getAmount() >= course.getPrice()) {
-                payment.setProcessed(true);
-                PlatformRegistry.incrementEnrollment();
-                System.out.println("Payment Approved for: " + student.getEmail());
-                System.out.println("Course: " + course.getTitle() + " has been added to dashboard.");
-            } else {
-                System.out.println("Transaction Declined: Insufficient Funds.");
-            }
-        }else{
+        if (!course.hasFreeSeat()) {
             System.out.println("Limit Reached.");
+            return null;
+        }
+        if (!hasSufficientFunds(payment.getAmount(), course.getPrice())) {
+            System.out.println("Transaction Declined: Insufficient Funds.");
+            return null;
         }
 
+        payment.setProcessed(true);
+        payment.setProcessedAt(LocalDateTime.now());
+
+        Enrollment enrollment = new Enrollment("ACTIVE", student, course, LocalDateTime.now(), payment);
+        boolean addedToCourse = course.addEnrollment(enrollment);
+        boolean addedToStudent = student.addEnrollment(enrollment);
+
+        if (!addedToCourse || !addedToStudent) {
+            System.out.println("Transaction Declined: Enrollment storage is full.");
+            return null;
+        }
+
+        PlatformRegistry.incrementEnrollment();
+
+        System.out.println("Payment Approved for: " + student.getEmail());
+        System.out.println("Course: " + course.getTitle() + " has been added to dashboard.");
+
+        Certificate certificate = new Certificate(LocalDate.now(), student, course);
+        enrollment.setCertificate(certificate);
+
+        return enrollment;
     }
 
     public void previewPurchase(Student student, Course course, Payment payment) {
@@ -30,11 +53,16 @@ public class PurchaseService {
         System.out.println("Course: " + course.getTitle());
         System.out.println("Price: " + course.getPrice());
         System.out.println("Payment amount: " + payment.getAmount());
-        if (payment.getAmount() >= course.getPrice()) {
-            System.out.println("Status: This purchase would be APPROVED. Change: " + (payment.getAmount() - course.getPrice()));
+        if (hasSufficientFunds(payment.getAmount(), course.getPrice())) {
+            BigDecimal change = payment.getAmount().subtract(course.getPrice());
+            System.out.println("Status: This purchase would be APPROVED. Change: " + change);
         } else {
             System.out.println("Status: This purchase would be DECLINED (insufficient funds).");
         }
+    }
+
+    public boolean hasSufficientFunds(BigDecimal paymentAmount, BigDecimal coursePrice) {
+        return paymentAmount != null && coursePrice != null && paymentAmount.compareTo(coursePrice) >= 0;
     }
 
 }
